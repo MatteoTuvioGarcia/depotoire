@@ -1,0 +1,57 @@
+table {
+    margin: 1em;
+    border: 3px double green;
+
+}
+td {
+
+    text-align: center;
+}
+.container {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+body{
+    font-family: "Consolas",'serif';
+    background-color: #f1f1f1;
+    background-size: cover;
+    overflow-wrap: anywhere;
+}
+#PERT{
+
+    width:8%
+}
+#PERT:hover{
+}
+.erreur{
+
+    display: inline-block;
+    color: red;
+    font-size: 2vw;
+    transition: 1.5s;
+}
+.erreur:hover{
+    font-size: 3vw;
+    letter-spacing: 5px;
+    text-decoration: underline;
+    cursor: not-allowed;
+}
+.erreur:active{
+    animation: bop 1.2s forwards infinite steps(144);
+}
+
+@keyframes bop {
+    10% {font-size: 2.2vw;}
+    20% {font-size: 2vw;}
+    30% {font-size: 2.2vw;}
+    40% {font-size: 2vw;}
+    50% {font-size: 2.2vw;}
+    60% {font-size: 2vw;}
+}
+
+p::first-letter {
+    color: red;
+}
