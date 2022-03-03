@@ -29,7 +29,7 @@ if (isset($_POST['btn_array'])){
         $tablo = [];
         $i = 0;
         while ($i <=$max){
-            $tablo[$i] = mt_rand(0,100);
+            $tablo[$i] = mt_rand(0,1000);
             $i++;
         }
         var_dump($tablo);
