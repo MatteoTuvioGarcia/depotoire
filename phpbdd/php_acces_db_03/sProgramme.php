@@ -13,25 +13,27 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-
             <?php
             // Utilisation de PDO : PHP DATA OBJECT
-
             //import des scripts
             if (isset($_POST['btn_choix'])) {
                 require_once 'include/infoconnection.php';
                 require_once 'include/connection.php';
                 require_once 'include/executerequete.php';
-                $min = $_POST['min'];
-                $max = $_POST['max'];
-                $cnx = connexion();
-                $req='SELECT * FROM auteur WHERE date_naissance BETWEEN ? AND ?';
-                $idRequete = executerequete($cnx,$req, [$min, $max]);
-                while ($row = $idRequete->fetch(PDO::FETCH_ASSOC)) {
-                    echo $row['id_auteur'] . ' / ' . $row['nom'] . '<br>';
+
+                if ($_POST['min'] > $_POST['max']) {
+                    echo "La valeure maximale ne peut pas être inférieure à la valeure maximale.";
+                } else {
+                    $minmax = [$_POST['min'], $_POST['max']];
+
+                    $req = 'SELECT * FROM auteur WHERE date_naissance BETWEEN ? AND ?';
+                    $idRequete = executerequete(connection(), $req, $minmax);
+                    $i = 0;
+                    afficherrequete($idRequete,true);
+
+                    // 6 - Fermeture de la connexion
+                    $cnx = null;
                 }
-                // 6 - Fermeture de la connexion
-                $cnx = null;
             }
             ?>
             <form method="post" action="sProgramme.php">

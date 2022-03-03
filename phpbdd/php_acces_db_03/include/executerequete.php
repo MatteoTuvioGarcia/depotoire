@@ -9,3 +9,16 @@ function executerequete($cnx,$req, $born =[]){
 
     return $idRequete;
 }
+
+function afficherrequete($req,$count = false)
+{
+    $i = 0;
+    while ($row = $req->fetch(PDO::FETCH_ASSOC)) {
+        echo $row['nom'] . '<br>';
+        $i++;
+    }
+    if ($count == true){
+        echo '<br>' . ' <p>Nombre de résultats: ' . $i.'</p>';
+    }
+
+}

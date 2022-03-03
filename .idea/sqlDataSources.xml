@@ -9,5 +9,26 @@
         </node>
       </scope>
     </mapping>
+    <mapping uuid="95fcb484-b678-45c4-88bb-617a01659c4c" name="MySQL - @localhost Mapping">
+      <data-sources db="14366d92-2cef-4e67-ba19-0f5d4c608e06" ddl="2f0c4041-6dd5-4aa3-9f4a-d423c8d9c175" />
+      <scope>
+        <node kind="schema" qname="bibliotheque" />
+      </scope>
+    </mapping>
+  </component>
+  <component name="SqlDataSourceStorage">
+    <option name="dataSources">
+      <list>
+        <State>
+          <option name="id" value="2f0c4041-6dd5-4aa3-9f4a-d423c8d9c175" />
+          <option name="name" value="MySQL - @localhost (DDL)" />
+          <option name="languageId" value="MariaDB" />
+          <option name="parent" value="14366d92-2cef-4e67-ba19-0f5d4c608e06" />
+          <option name="urls">
+            <array />
+          </option>
+        </State>
+      </list>
+    </option>
   </component>
 </project>
