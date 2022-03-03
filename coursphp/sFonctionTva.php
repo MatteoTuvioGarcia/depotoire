@@ -1,13 +1,13 @@
 <?php
-if (isset($_POST['btn_calculer'])){
-    $tva = $_POST['TVA']/100;
+if (isset($_POST['btn_calculer'])) {
+    $tva = $_POST['TVA'] / 100;
     $mtn = $_POST['montant'];
     $calc = 0;
-    if($mtn <0 || $tva < 0){
+    if ($mtn < 0 || $tva < 0) {
         echo "Merci d'entrer des valeurs supérieures à 0, enculé.";
-    }else{
-        $calc = $mtn+($mtn*$tva);
-        echo 'le montant est de: $'.$calc;
+    } else {
+        $calc = $mtn + ($mtn * $tva);
+        echo 'le montant est de: $' . $calc;
     }
 }
 
