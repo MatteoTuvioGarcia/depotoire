@@ -15,30 +15,33 @@
         <div class="col-md-12">
             <?php
             // Utilisation de PDO : PHP DATA OBJECT
-            //import des scripts
+            //import des scripts au clic de btn_choix
             if (isset($_POST['btn_choix'])) {
                 require_once 'include/infoconnection.php';
                 require_once 'include/connection.php';
                 require_once 'include/executerequete.php';
-
+                //Vérification d'erreur, min>max impossible
                 if ($_POST['min'] > $_POST['max']) {
                     echo "La valeure maximale ne peut pas être inférieure à la valeure maximale.";
                 } else {
-                    $minmax = [$_POST['min'], $_POST['max']];
-
+                    $minmax = [$_POST['min'], $_POST['max']];   //Assignation de min/max dans un tableau pour les passer à la requete
+                    if (isset($_POST['count'])){
+                        $doCount = true;
+                    }else{
+                        $doCount = false;
+                    }
                     $req = 'SELECT * FROM auteur WHERE date_naissance BETWEEN ? AND ?';
-                    $idRequete = executerequete(connection(), $req, $minmax);
-                    $i = 0;
-                    afficherrequete($idRequete,true);
+                    $idRequete = executerequete(connection(), $req, $minmax);   //Envoie de la requête (executerequete.php, connection()->connection.php)
+                    afficherrequete($idRequete, $doCount);   //affichage de la requête (executerequete.php)
 
-                    // 6 - Fermeture de la connexion
-                    $cnx = null;
+
                 }
             }
             ?>
             <form method="post" action="sProgramme.php">
-                <input type="number" name="min"/>
-                <input type="number" name="max"/>
+                <label>Minimum <input type="number" name="min"/></label>
+                <label>Maximum <input type="number" name="max"/></label>
+                <label>Afficher le compte? <input type="checkbox" name="count"/></label>
                 <input type="submit" name="btn_choix"/>
             </form>
         </div>
