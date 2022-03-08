@@ -16,7 +16,8 @@
             <?php
             // Utilisation de PDO : PHP DATA OBJECT
             //import des scripts au clic de btn_choix
-            if (isset($_POST['btn_choix'])) {
+            if (isset($_POST['btn_choix']))
+            {
                 require_once 'include/infoconnection.php';
                 require_once 'include/connection.php';
                 require_once 'include/executerequete.php';
@@ -24,28 +25,30 @@
                 if ($_POST['min'] <> "" && $_POST['max'] <> "")
                 {
                     if ($_POST['min'] > $_POST['max'])
+                    {
+                        echo "La valeure maximale ne peut pas être inférieure à la valeure maximale.";
+                    } else {
+                        $minmax = [$_POST['min'], $_POST['max']];   //Assignation de min/max dans un tableau pour les passer à la requete
+                        if (isset($_POST['count']))
                         {
-                            echo "La valeure maximale ne peut pas être inférieure à la valeure maximale.";
+                            $doCount = true;
                         } else
-                            {
-                                $minmax = [$_POST['min'], $_POST['max']];   //Assignation de min/max dans un tableau pour les passer à la requete
-                                if (isset($_POST['count'])) {
-                                    $doCount = true;
-                                } else {
-                                    $doCount = false;
-                                }
-                                $req = 'SELECT * FROM biere WHERE TauxAlcool BETWEEN ? AND ?';
-                                $idRequete = executerequete(connection(), $req, $minmax);   //Envoie de la requête (executerequete.php, connection()->connection.php)
-                                afficherrequete($idRequete, $doCount);   //affichage de la requête (executerequete.php)
+                        {
+                            $doCount = false;
+                        }
+                        $req = 'SELECT * FROM biere WHERE TauxAlcool BETWEEN ? AND ?';
+                        $idRequete = executerequete(connection(), $req, $minmax);   //Envoie de la requête (executerequete.php, connection()->connection.php)
+                        afficherrequete($idRequete, $doCount);   //affichage de la requête (executerequete.php)
 
 
-                            }
-                } else {
+                    }
+                } else
+                {
                     $req = 'SELECT * FROM biere';
                     $cnx = connection();
                     $idRequete = $cnx->query($req);
-                       //Envoie de la requête (executerequete.php, connection()->connection.php)
-                    afficherrequete($idRequete);
+                    //Envoie de la requête (executerequete.php, connection()->connection.php)
+                    afficherrequete($idRequete, true);
                 }
             }
             ?>
