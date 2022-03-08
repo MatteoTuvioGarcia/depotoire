@@ -43,6 +43,9 @@ class Assure
 
     }
 
+
+
+
     public function getBonusMalus(): float
     {
         return $this->bonusmalus;
