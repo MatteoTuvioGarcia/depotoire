@@ -2,13 +2,13 @@
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <link href=https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Acces BD avec PDO</title>
 </head>
 <body>
-<header>
-    <p>Acces BD avec PDO</p>
+<header class="container">
+    <h1 class="col-md-12">Acces BD avec PDO</h1>
 </header>
 <div class="container">
     <div class="row">
@@ -21,20 +21,31 @@
                 require_once 'include/connection.php';
                 require_once 'include/executerequete.php';
                 //Vérification d'erreur, min>max impossible
-                if ($_POST['min'] > $_POST['max']) {
-                    echo "La valeure maximale ne peut pas être inférieure à la valeure maximale.";
+                if ($_POST['min'] <> "" && $_POST['max'] <> "")
+                {
+                    if ($_POST['min'] > $_POST['max'])
+                        {
+                            echo "La valeure maximale ne peut pas être inférieure à la valeure maximale.";
+                        } else
+                            {
+                                $minmax = [$_POST['min'], $_POST['max']];   //Assignation de min/max dans un tableau pour les passer à la requete
+                                if (isset($_POST['count'])) {
+                                    $doCount = true;
+                                } else {
+                                    $doCount = false;
+                                }
+                                $req = 'SELECT * FROM biere WHERE TauxAlcool BETWEEN ? AND ?';
+                                $idRequete = executerequete(connection(), $req, $minmax);   //Envoie de la requête (executerequete.php, connection()->connection.php)
+                                afficherrequete($idRequete, $doCount);   //affichage de la requête (executerequete.php)
+
+
+                            }
                 } else {
-                    $minmax = [$_POST['min'], $_POST['max']];   //Assignation de min/max dans un tableau pour les passer à la requete
-                    if (isset($_POST['count'])){
-                        $doCount = true;
-                    }else{
-                        $doCount = false;
-                    }
-                    $req = 'SELECT * FROM auteur WHERE date_naissance BETWEEN ? AND ?';
-                    $idRequete = executerequete(connection(), $req, $minmax);   //Envoie de la requête (executerequete.php, connection()->connection.php)
-                    afficherrequete($idRequete, $doCount);   //affichage de la requête (executerequete.php)
-
-
+                    $req = 'SELECT * FROM biere';
+                    $cnx = connection();
+                    $idRequete = $cnx->query($req);
+                       //Envoie de la requête (executerequete.php, connection()->connection.php)
+                    afficherrequete($idRequete);
                 }
             }
             ?>

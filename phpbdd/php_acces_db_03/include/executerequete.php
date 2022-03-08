@@ -1,5 +1,5 @@
 <?php
-function executerequete($cnx,$req, $born =[]){
+function executerequete($cnx,$req, $born = []){
 
 
     // 4 - preparation de la requête et retourne un identifiant de connexion
@@ -14,11 +14,11 @@ function afficherrequete($req,$count = false)
 {
     $i = 0;
     while ($row = $req->fetch(PDO::FETCH_ASSOC)) {
-        echo $row['nom'] . '<br>';
+        echo $row['Version'] . '<br>';
         $i++;
     }
     if ($count == true){
-        echo '<br>' . ' <p>Nombre de résultats: ' . $i.'</p>';
+        echo '<br>' . ' <p class="count">Nombre de résultats: ' . $i.'</p>';
     }
 
 }
