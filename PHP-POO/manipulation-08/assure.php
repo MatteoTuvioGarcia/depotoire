@@ -15,11 +15,11 @@ class Assure
     //Row = 1L %data
     public function hydrater(array $row)
     {
-        foreach($row as $k => $v){
-           $setter = 'set'.ucfirst($k);
-           if(method_exists($this,$setter)){
+        foreach ($row as $k => $v) {
+            $setter = 'set' . ucfirst($k);
+            if (method_exists($this, $setter)) {
                 $this->$setter($v);
-           }
+            }
         }
     }
 
@@ -27,10 +27,12 @@ class Assure
     //constructeur, vient construire une instance
     public function __construct($data)
     {
-        $this->hydrater($data);
+        if ($data <> null) {
+            $this->hydrater($data);
+        }
     }
 
-    public static $information = "Tout les avantages de nos abonnés";
+    public static string $information = "Tout les avantages de nos abonnés";
     const BRONZE = 50;
     const ARGENT = 100;
     const GOLD = 150;
@@ -46,8 +48,8 @@ class Assure
     {
         $this->idAssure = $idAssure;
     }
-    //espace définition de méthodes
 
+    //espace définition de méthodes
 
 
     public function reglerassurance(): void

@@ -55,17 +55,13 @@ class gererAssure
         //requete préparée attendue type select
         $sql = "SELECT * from assure";
         $idRequete = $this->cnx->query($sql);
-        while ($row = $idRequete->fetch(PDO::FETCH_ASSOC))
-        {
-            if (isset($row))
-            {
+        while ($row = $idRequete->fetch(PDO::FETCH_ASSOC)) {
+            if (isset($row)) {
                 $assures[] = new Assure($row);
 
             }
         }
-        if (isset($assures)) {
-            return $assures;
-        }
+        return $assures ?? null;
     }
 
     public function count()
@@ -77,7 +73,7 @@ class gererAssure
                 $x = $x + 1;
             }
             return $x;
-        }else{
+        } else {
             return 0;
         }
     }
