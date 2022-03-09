@@ -1,20 +1,25 @@
 <?php
-class gererAssure {
+
+class gererAssure
+{
     private object $cnx;
+
     public function __construct($cnx)
     {
         $this->setCnx($cnx);
     }
+
     public function setCnx(object $cnx)
     {
-        $this->cnx=$cnx;
+        $this->cnx = $cnx;
     }
+
     public function addAssure(Assure $assure)
     {
         $sql = "INSERT INTO assure(Nom, Age, Domicile, bonusMalus, pointsFidelite) VALUES (?,?,?,?,?)";
         $idRequete = $this->cnx->prepare($sql);
         $idRequete->execute([
-            $assure->getNom(), $assure->getAge(),$assure->getDomicile(), $assure->getBonusMalus(), $assure->getPointsFidelite()
+            $assure->getNom(), $assure->getAge(), $assure->getDomicile(), $assure->getBonusMalus(), $assure->getPointsFidelite()
         ]);
     }
 
@@ -24,7 +29,7 @@ class gererAssure {
         $sql = "UPDATE assure SET Nom = ?, Age = ?, Domicile = ?, bonusMalus = ?, pointsFidelite = ? WHERE idAssure = ?";
         $idRequete = $this->cnx->prepare($sql);
         $idRequete->execute([
-            $assure->getNom(), $assure->getAge(),$assure->getDomicile(), $assure->getBonusMalus(), $assure->getPointsFidelite(), $assure->getIdAssure()
+            $assure->getNom(), $assure->getAge(), $assure->getDomicile(), $assure->getBonusMalus(), $assure->getPointsFidelite(), $assure->getIdAssure()
         ]);
     }
 
@@ -50,18 +55,30 @@ class gererAssure {
         //requete préparée attendue type select
         $sql = "SELECT * from assure";
         $idRequete = $this->cnx->query($sql);
-        while ($row = $idRequete->fetch(PDO::FETCH_ASSOC)) {
-           $assures[] = new Assure($row);
+        while ($row = $idRequete->fetch(PDO::FETCH_ASSOC))
+        {
+            if (isset($row))
+            {
+                $assures[] = new Assure($row);
+
+            }
         }
-        return $assures;
+        if (isset($assures)) {
+            return $assures;
+        }
     }
 
-    public function count(){
+    public function count()
+    {
         $i = $this->getListAssure();
         $x = 0;
-        foreach($i as $b){
-            $x=$x+1;
+        if ($i <> null) {
+            foreach ($i as $b) {
+                $x = $x + 1;
+            }
+            return $x;
+        }else{
+            return 0;
         }
-        return $x;
     }
 }

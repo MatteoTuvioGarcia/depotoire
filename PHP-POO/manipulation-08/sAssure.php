@@ -27,7 +27,7 @@ function htmlAssure()
     $cnx = connection();
     $gerer = new gererAssure($cnx);
     $x = $gerer->getListAssure();
-
+if($x <> null){
     foreach ($x as $assure) {
         echo "<form action='sAssure.php' method='POST'><tr>";
         echo "<td><input  type='number' name='id' value='".$assure->getidAssure() . "'readonly hidden/>".$assure->getidAssure()."</td>";
@@ -39,6 +39,7 @@ function htmlAssure()
         echo "<td>" . "<input class='btn btn-primary' type='submit' name=supp value='Supprimer'/>" . "</td>";
         echo "</tr></form>";
     }
+}
 }
 
 
@@ -60,7 +61,7 @@ if (isset($_POST['regler'])) {
 
 
 if (isset($_POST['supp'])) {
-    if($gerer->count() > 1) {
+    if($gerer->count() >= 1) {
         $ass = $gerer->getAssure($_POST['id']);
         $gerer->delAssure($ass);
     }
