@@ -8,6 +8,7 @@ class Assure
     private int $age = 5;
     private float $bonusmalus = 0;
 
+
     //constructeur, vient construire une instance
     public function __construct(string $nom, string $domicile, int $age)
     {
@@ -17,7 +18,10 @@ class Assure
         $this->setBonusmalus(0);
     }
 
-
+    public static $information = "Tout les avantages de nos abonnés";
+    const BRONZE = 50;
+    const ARGENT = 100;
+    const GOLD = 150;
     //espace définition de méthodes
 
 
@@ -70,7 +74,10 @@ class Assure
     {
         return $this->age;
     }
-
+    public static function getInfo()
+    {
+        return self::$information;
+    }
     /**
      * @param string $nom
      */

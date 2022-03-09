@@ -2,8 +2,13 @@
 //appel de la classe assuré
 require_once "assure.php";
 //création d'une instance de classe
+
 $objPierre = new Assure("Pierre", "Déols", 22);
 $objJulie = new Assure("Julie", "Paris", 21);
+echo Assure::getInfo()."<br>";
+echo "la carte GOLD s'acquiert à partir de: ".Assure::GOLD."<br>";
+echo "la carte SILVER s'acquiert à partir de: ".Assure::ARGENT."<br>";
+echo "la carte BRONZE s'acquiert à partir de: ".Assure::BRONZE."<br>";
 $objPierre->reglerassurance();
 $objPierre->avoiraccident();
 $objJulie->reglerassurance();
