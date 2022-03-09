@@ -14,6 +14,18 @@ class gererAssure
         $this->cnx = $cnx;
     }
 
+    public function getMinInAssure($data)
+    {
+        $min = 1000;
+        foreach ($data as $row) {
+            $currentval = $row->getPointsFidelite();
+            if ($currentval <= $min) {
+                $min = $currentval;
+            }
+        }
+        return $min;
+    }
+
     public function addAssure(Assure $assure)
     {
         $sql = "INSERT INTO assure(Nom, Age, Domicile, bonusMalus, pointsFidelite) VALUES (?,?,?,?,?)";

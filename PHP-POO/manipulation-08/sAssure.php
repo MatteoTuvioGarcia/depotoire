@@ -21,6 +21,7 @@ function htmlGetcount()
 
 function htmlAssureTable()
 {
+
     $cnx = connection();
     $gerer = new gererAssure($cnx);
     $x = $gerer->getListAssure();
@@ -32,6 +33,7 @@ function htmlAssureTable()
             <th>Nom</th>
             <th>BonusMalus</th>
             <th>Fidélité</th>
+            <th>Classe</th>
             <th>Régler</th>
             <th>Accident</th>
             <th>Supprimer</th>
@@ -44,6 +46,16 @@ function htmlAssureTable()
             echo "<td>" . $assure->getNom() . "</td>";
             echo "<td>" . $assure->getbonusMalus() . "</td>";
             echo "<td>" . $assure->getPointsFidelite() . "</td>";
+            if ($assure->getPointsFidelite() >= Assure::BRONZE && $assure->getPointsFidelite() < Assure::ARGENT) {
+                echo "<td class='bronze'>BRONZE</td>";
+            } elseif ($assure->getPointsFidelite() >= Assure::ARGENT && $assure->getPointsFidelite() < Assure::GOLD) {
+                echo "<td class='argent'>ARGENT</td>";
+            } elseif ($assure->getPointsFidelite() >= Assure::GOLD) {
+                echo "<td class='gold'>GOLD</td>";
+            } else {
+                echo "<td class=''></td>";
+            }
+
             echo "<td>" . "<input class='btn btn-primary' type='submit' name=regler value='Régler'/>" . "</td>";
             echo "<td>" . "<input class='btn btn-primary' type='submit' name=accident value='Accident'/>" . "</td>";
             echo "<td>" . "<input class='btn btn-primary' type='submit' name=supp value='Supprimer'/>" . "</td>";
@@ -91,12 +103,12 @@ if (isset($_POST['btn_ajout'])) {
     <title>TP PhP</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 <div class="container text-center">
-    <h1 class="count">Il y a <?php htmlGetcount();?> adhérent[s].</h1>
-        <?php htmlAssureTable();?>
+    <h1 class="count">Il y a <?php htmlGetcount(); ?> adhérent[s].</h1>
+    <?php htmlAssureTable(); ?>
     <form class="form-group col-md-12 mt-4" method="post" action="sAssure.php">
         <label for="nom">Nom:</label>
         <input class="form-control" type="text" name="nom" placeholder="Nom du nouvel assuré"/>

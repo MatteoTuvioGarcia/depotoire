@@ -1,0 +1,36 @@
+.bronze {
+    background-color: saddlebrown;
+    font-size: 1rem;
+    color: white;
+}
+
+.argent {
+    background-color: silver;
+    font-size: 1rem;
+    color: white;
+}
+
+.gold {
+
+    font-size: 1.2rem;
+    background-color: gold;
+    color: white;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% {
+        background-color: gold;
+        color: white;
+    }
+    50% {
+        background-color: goldenrod;
+        color: white;
+    }
+    100% {
+        background-color: gold;
+        color: white;
+    }
+
+;
+}
