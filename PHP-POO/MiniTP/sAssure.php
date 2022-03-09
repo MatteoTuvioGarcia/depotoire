@@ -12,5 +12,6 @@ $objJulie->reglerassurance();
 $objPierre->setPointsFidelite(20);
 $objPierre->setBonusmalus(20);
 $objPierre->reglerassurance();
+echo Assure::BRONZE.BR;
 echo $objPierre->getNom() . " Points de fidelite: " .$objPierre->getPointsFidelite() . " Bonusmalus: " . $objPierre->getBonusMalus() . BR;
 echo $objJulie->getNom() . " Points de fidelite: " .$objJulie->getPointsFidelite() . " Bonusmalus: " . $objJulie->getBonusMalus(). BR;

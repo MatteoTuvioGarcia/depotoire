@@ -10,22 +10,44 @@ class Assure
     private float $bonusmalus = 0;
     private int $pointsFidelite = 0;
 
-    //constructeur, vient construire une instance
 
-    public function __construct(string $nom, string $domicile, int $age)
+    //Vient remplir les données à partir d'une source externe
+    //Row = 1L %data
+    public function hydrater(array $row)
     {
-        $this->setNom($nom);
-        $this->setDomicile($domicile);
-        $this->setAge($age);
-        $this->setBonusmalus(0);
-        $this->setPointsFidelite(5);
+        foreach($row as $k => $v){
+           $setter = 'set'.ucfirst($k);
+           if(method_exists($this,$setter)){
+                $this->$setter($v);
+           }
+        }
     }
 
+
+    //constructeur, vient construire une instance
+    public function __construct($data)
+    {
+        $this->hydrater($data);
+    }
+
+    public static $information = "Tout les avantages de nos abonnés";
     const BRONZE = 50;
-    const SILVER = 100;
+    const ARGENT = 100;
     const GOLD = 150;
 
+
+    public function getIdAssure(): int
+    {
+        return $this->idAssure;
+    }
+
+
+    public function setIdAssure(int $idAssure): void
+    {
+        $this->idAssure = $idAssure;
+    }
     //espace définition de méthodes
+
 
 
     public function reglerassurance(): void
@@ -113,9 +135,9 @@ class Assure
     /**
      * @param int $age
      */
-    public function setAge($age): void
+    public function setAge(int $age): void
     {
-        if (is_int($age) == false || $age < 7 || $age > 130) {
+        if ($age < 7 || $age > 130) {
             trigger_error("AGE NON VALIDE.");
         } else {
             $this->age = $age;
@@ -132,11 +154,9 @@ class Assure
             return;
         }
         if ($this->bonusmalus + $bonusmalus >= 50) {
-            echo "tjrs positif";
             $this->bonusmalus = 50;
         }
         if ($this->bonusmalus + $bonusmalus <= -50) {
-            echo "tjrs negatif";
             $this->bonusmalus = -50;
         }
         if ($this->bonusmalus + $bonusmalus <= 50 && $this->bonusmalus + $bonusmalus >= -50) {
