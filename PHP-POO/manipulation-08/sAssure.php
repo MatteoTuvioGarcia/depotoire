@@ -29,42 +29,43 @@ function htmlAssure()
     $x = $gerer->getListAssure();
 
     foreach ($x as $assure) {
-        echo "<tr>";
-        echo "<td>" . $assure->getidAssure() . "</td>";
+        echo "<form action='sAssure.php' method='POST'><tr>";
+        echo "<td><input  type='number' name='id' value='".$assure->getidAssure() . "'readonly hidden/>".$assure->getidAssure()."</td>";
         echo "<td>" . $assure->getNom() . "</td>";
         echo "<td>" . $assure->getbonusMalus() . "</td>";
         echo "<td>" . $assure->getPointsFidelite() . "</td>";
-        echo "<td>" . "<form action='sAssure.php' method='post'><input type='submit' name=regle_" . $assure->getIdAssure() . " value='régler'/></form>" . "</td>";
-        echo "<td>" . "<form action='sAssure.php' method='post'><input type='submit' name=accident_" . $assure->getIdAssure() . " value='Accident'/></form>" . "</td>";
-        echo "<td>" . "<form action='sAssure.php' method='post'><input type='submit' name=supp_" . $assure->getIdAssure() . " value='Supprimer'/></form>" . "</td>";
-        echo "</tr>";
+        echo "<td>" . "<input class='btn btn-primary' type='submit' name=regler value='régler'/>" . "</td>";
+        echo "<td>" . "<input class='btn btn-primary' type='submit' name=accident value='Accident'/>" . "</td>";
+        echo "<td>" . "<input class='btn btn-primary' type='submit' name=supp value='Supprimer'/>" . "</td>";
+        echo "</tr></form>";
     }
 }
 
-foreach ($e as $assure) {
-    if (isset($_POST['regle_' . $assure->getIdAssure()])) {
-        $ass = $gerer->getAssure($assure->getIdAssure());
-        $ass->reglerassurance();
-        $gerer->editAssure($ass);
 
-    }
+if (isset($_POST['regler'])) {
+    $ass = $gerer->getAssure($_POST['id']);
+    $ass->reglerassurance();
+    $gerer->editAssure($ass);
+
 }
 
-foreach ($e as $assure) {
-    if (isset($_POST['accident_' . $assure->getIdAssure()])) {
-        $ass = $gerer->getAssure($assure->getIdAssure());
+
+
+    if (isset($_POST['accident'])) {
+        $ass = $gerer->getAssure($_POST['id']);
         $ass->avoiraccident();
         $gerer->editAssure($ass);
 
     }
-}
-foreach ($e as $assure) {
-    if (isset($_POST['supp_' . $assure->getIdAssure()])) {
-        $ass = $gerer->getAssure($assure->getIdAssure());
-        $gerer->delAssure($ass);
 
+
+if (isset($_POST['supp'])) {
+    if($gerer->count() > 1) {
+        $ass = $gerer->getAssure($_POST['id']);
+        $gerer->delAssure($ass);
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -76,8 +77,8 @@ foreach ($e as $assure) {
 </head>
 <body>
 <div class="container">
-    <h1 class="count">Il y a <?php htmlGetcount(); ?> adhérents.</h1>
-    <table>
+    <h1 class="count">Il y a <?php htmlGetcount(); ?> adhérent[s].</h1>
+    <table  class='col-md-12 text-center'>
         <thead>
         <tr>
             <th>N.</th>
@@ -94,9 +95,9 @@ foreach ($e as $assure) {
         </tbody>
     </table>
     <form method="post" action="sAssure.php">
-        <label>Nom: <input type="text" name="nom"/></label>
-        <label>Age: <input type="number" name="age"/></label>
-        <label>Domicile: <input type="text" name="domicile"/></label>
+        <label>Nom: <input type="text" name="nom" placeholder="Nom du nouvel assuré"/></label>
+        <label>Age: <input type="number" name="age" placeholder="Age du nouvel assuré"/></label>
+        <label>Domicile: <input type="text" name="domicile" placeholder="Ville du nouvel assuré"/></label>
         <input type="submit" name="btn_ajout" value="Ajouter">
 
     </form>
