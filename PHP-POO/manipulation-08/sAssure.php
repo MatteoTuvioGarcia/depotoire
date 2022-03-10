@@ -25,7 +25,7 @@ function htmlAssureTable()
     $cnx = connection();
     $gerer = new gererAssure($cnx);
     $x = $gerer->getListAssure();
-    if ($x <> null) {
+    if ($x !== null) {
         echo "<table class='col-md-12 text-center'>
         <thead>
         <tr>
@@ -90,9 +90,19 @@ if (isset($_POST['supp'])) {
     }
 }
 if (isset($_POST['btn_ajout'])) {
-    if ($_POST['nom'] <> "" && $_POST['domicile'] <> "" && $_POST['age'] <> "") {
-        $assure = new Assure($_POST);
-        $gerer->addAssure($assure);
+    if ($_POST['nom'] !== "" && $_POST['domicile'] !== "" && $_POST['age'] !== "") {
+        $nom = $_POST['nom'];
+        $domicile = $_POST['domicile'];
+        $age = $_POST['age'];
+
+        if (ctype_space($domicile) ==1 || ctype_space($nom)==1 || ctype_space($age) == 1) {
+
+        } else {
+            if ($age > 0 && $age < 120) {
+                $assure = new Assure(['nom' => $nom, 'domicile' => $domicile, 'age' => $age]);
+                $gerer->addAssure($assure);
+            }
+        }
     }
 }
 ?>
