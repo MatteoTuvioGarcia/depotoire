@@ -1,31 +1,31 @@
 <?php
-//appel de la classe assuré et des modules de connection bdd
-
+//Appel des modules de classes et de connection BDD
 require_once "assure.php";
 require_once "include/infoconnection.php";
 require_once "include/executerequete.php";
 require_once "include/connection.php";
 require_once "gererAssurer.php";
-$cnx = connection();
-$gerer = new gererAssure($cnx);
-$x = $gerer->count();
-$e = $gerer->getListAssure();
 
+//Definition de variables globales utiles (Nombre d'abonnés, liste des abonnés sous forme de tableau, objet de gestion Gerer)
+$gerer = new gererAssure(connection());
+$nbrAssure = $gerer->count();
+$listeObjAssure = $gerer->getListAssure();
 
+//Fonction qui retourne le compte d'assures dans l'HTML
 function htmlGetcount()
 {
-    $cnx = connection();
-    $gerer = new gererAssure($cnx);
+    global $gerer;
     echo $gerer->count();
 }
 
+
+//Fonction pour générer une table contenant tout les assurés dans l'HTML
 function htmlAssureTable()
 {
-
-    $cnx = connection();
-    $gerer = new gererAssure($cnx);
-    $x = $gerer->getListAssure();
-    if ($x !== null) {
+    global $gerer, $listeObjAssure, $nbrAssure;
+    $listeObjAssure = $gerer->getListAssure();
+    $nbrAssure = $gerer->count();
+    if ($nbrAssure !== 0) {
         echo "<table class='col-md-12 text-center'>
         <thead>
         <tr>
@@ -40,7 +40,7 @@ function htmlAssureTable()
         </tr>
         </thead>
         <tbody>";
-        foreach ($x as $assure) {
+        foreach ($listeObjAssure as $assure) {
             echo "<form action='sAssure.php' method='POST'><tr>";
             echo "<td><input  type='number' name='id' value='" . $assure->getidAssure() . "'readonly hidden/>" . $assure->getidAssure() . "</td>";
             echo "<td>" . $assure->getNom() . "</td>";
@@ -66,7 +66,7 @@ function htmlAssureTable()
     }
 }
 
-
+//Appui sur bouton Regler
 if (isset($_POST['regler'])) {
     $ass = $gerer->getAssure($_POST['id']);
     $ass->reglerassurance();
@@ -74,7 +74,7 @@ if (isset($_POST['regler'])) {
 
 }
 
-
+//Appui sur bouton Accident
 if (isset($_POST['accident'])) {
     $ass = $gerer->getAssure($_POST['id']);
     $ass->avoiraccident();
@@ -82,27 +82,33 @@ if (isset($_POST['accident'])) {
 
 }
 
-
+//Appui sur bouton de suppression
 if (isset($_POST['supp'])) {
     if ($gerer->count() >= 1) {
         $ass = $gerer->getAssure($_POST['id']);
         $gerer->delAssure($ass);
     }
 }
+
+//Appui sur bouton d'ajout
 if (isset($_POST['btn_ajout'])) {
     if ($_POST['nom'] !== "" && $_POST['domicile'] !== "" && $_POST['age'] !== "") {
         $nom = $_POST['nom'];
         $domicile = $_POST['domicile'];
         $age = $_POST['age'];
 
-        if (ctype_space($domicile) ==1 || ctype_space($nom)==1 || ctype_space($age) == 1) {
-
+        if (ctype_space($domicile) == 1 || ctype_space($nom) == 1 || ctype_space($age) == 1) {
+            error_log("Entrée invalide::Fonction AJOUT ASSURE (Nom, domicile ou age seulement espaces)");
         } else {
             if ($age > 0 && $age < 120) {
                 $assure = new Assure(['nom' => $nom, 'domicile' => $domicile, 'age' => $age]);
                 $gerer->addAssure($assure);
+            } else {
+                error_log("Entrée invalide::Fonction AJOUT ASSURE (Age >120)");
             }
         }
+    } else {
+        error_log("Entrée invalide::Fonction AJOUT ASSURE (Nom, domicile ou age vide)");
     }
 }
 ?>

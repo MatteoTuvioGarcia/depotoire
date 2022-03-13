@@ -168,7 +168,22 @@ class Assure
 
     public function setPointsFidelite(int $pointsFidelite): void
     {
-        $this->pointsFidelite = $this->pointsFidelite + $pointsFidelite;
+        $max = 200;
+        $min = 0;
+
+        if (is_int($pointsFidelite) == false) {
+            trigger_error("BONUSMALUS NON VALIDE.");
+            return;
+        }
+        if ($this->pointsFidelite + $pointsFidelite >= $max) {
+            $this->pointsFidelite = $max;
+        }
+        if ($this->pointsFidelite + $pointsFidelite < $min) {
+            $this->pointsFidelite = $min;
+        }
+        if ($this->pointsFidelite + $pointsFidelite <= $max && $this->pointsFidelite + $pointsFidelite >= $min) {
+            $this->pointsFidelite = $this->pointsFidelite + $pointsFidelite;
+        }
     }
 
 }
