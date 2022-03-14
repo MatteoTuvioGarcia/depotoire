@@ -1,18 +1,10 @@
 <?php
-
-class gererAssure
+require "gerer.php";
+class gererAssure extends gerer
 {
-    private object $cnx;
 
-    public function __construct($cnx)
-    {
-        $this->setCnx($cnx);
-    }
 
-    public function setCnx(object $cnx)
-    {
-        $this->cnx = $cnx;
-    }
+
 
     public function getMinInAssure($data)
     {
@@ -23,20 +15,21 @@ class gererAssure
                 $min = $currentval;
             }
         }
+
         return $min;
     }
 
     public function addAssure(Assure $assure)
     {
         $sql = "INSERT INTO assure(Nom, Age, Domicile, bonusMalus, pointsFidelite) VALUES (?,?,?,?,?)";
-        $idRequete = $this->cnx->prepare($sql);
-        $idRequete->execute([
+        $this->executeRequete($sql,[
             $assure->getNom(),
             $assure->getAge(),
             $assure->getDomicile(),
             $assure->getBonusMalus(),
             $assure->getPointsFidelite()
         ]);
+
     }
 
     public function editAssure(Assure $assure)
@@ -70,7 +63,7 @@ class gererAssure
     {
         //requete préparée attendue type select
         $sql = "SELECT * from assure";
-        $idRequete = $this->cnx->query($sql);
+        $idRequete = $this->executeRequete($sql);
         while ($row = $idRequete->fetch(PDO::FETCH_ASSOC)) {
             if (isset($row)) {
                 $assures[] = new Assure($row);
