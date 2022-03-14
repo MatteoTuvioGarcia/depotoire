@@ -4,7 +4,7 @@ require_once "assure.php";
 require_once "include/infoconnection.php";
 require_once "include/executerequete.php";
 require_once "include/connection.php";
-require_once "gererAssurer.php";
+require_once "gererAssure.php";
 
 //Definition de variables globales utiles (Nombre d'abonnés, liste des abonnés sous forme de tableau, objet de gestion Gerer)
 $gerer = new gererAssure(connection());
